@@ -33,49 +33,42 @@ const Description = (props) => {
 
 const StarIcon = (props) => {
   let starType = ((props.type === "empty") ? regular('star') : ((props.type == "full") ? solid('star') : solid('star-half-stroke')) );
-  
-  console.log("Tipo de estrela", props.type);
-  console.log("[starType]", starType);
 
   return(
     <FontAwesomeIcon className="starIcon" icon={starType} />
   );
 }
 
-const StarAvaliationDiv = (props) => {
-  let starsAdded = 0, starsNumber = eval(props.starsNumber), halfStars = 0, starsDiv = [];
+const EvaluationDiv = (props) => {
+  let starsAdded = 0, evaluationGrade = eval(props.evaluationGrade), starsDiv = [], existHalfStar = false;
   
-  //Se houver uma estrela e meia
-  if(starsNumber % 1 !== 0){
-    starsNumber -= 0.5;
-    starsDiv[starsNumber] = <StarIcon type="half" />
-    halfStars++;
+  if(evaluationGrade % 1 !== 0){
+    evaluationGrade -= 0.5;
+    starsDiv[evaluationGrade] = <StarIcon type="half" />
+    existHalfStar = true;
   }
 
-  for(starsAdded = 0; starsAdded < starsNumber; starsAdded++){
+  for(starsAdded; starsAdded < evaluationGrade; starsAdded++){
     starsDiv[starsAdded] = <StarIcon type="full" />
   }
   
-  
-  let starsMissing = 5 - starsAdded - halfStars;
-
-  for(let i = 0; i < starsMissing; i++){
-    starsDiv[starsAdded+halfStars] = <StarIcon type="empty" />
+  while((starsAdded + existHalfStar) != 5){
+    starsDiv[starsAdded+existHalfStar] = <StarIcon type="empty" />
     starsAdded++;
   }
 
   return(
     <div>
-      {returnMultipleDivs(starsDiv)}
+      {starsDiv}
     </div>
   );
 }
 
-const FacilitieIcon = (props) => {
+const FacilityIcon = (props) => {
 
 }
 
-const FacilitieDiv = (props) => {
+const FacilitiesDiv = (props) => {
   let testeDiv = <div>
     <h1>Testando</h1>
   </div>
@@ -88,6 +81,6 @@ const FacilitieDiv = (props) => {
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <div>
-    <StarAvaliationDiv starsNumber="1.5" />
+    <EvaluationDiv evaluationGrade="2.5" />
   </div>
 );
