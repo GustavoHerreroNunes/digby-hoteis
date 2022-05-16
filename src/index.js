@@ -32,7 +32,7 @@ const Description = (props) => {
 }
 
 const StarIcon = (props) => {
-  let starType = ((props.type === "empty") ? regular('star') : ((props.type == "full") ? solid('star') : solid('star-half-stroke')) );
+  let starType = ((props.type === "empty") ? regular('star') : ((props.type === "full") ? solid('star') : solid('star-half-stroke')) );
 
   return(
     <FontAwesomeIcon className="starIcon" icon={starType} />
@@ -65,15 +65,33 @@ const EvaluationDiv = (props) => {
 }
 
 const FacilityIcon = (props) => {
+  let facilityType = ((props.type === "wifi") ? solid('wifi') : 
+                      (props.type === "pool") ? solid('water-ladder') :
+                      (props.type === "animals-allowed") ? solid('dog') :
+                      (props.type === "cable-tv") ? solid('tv') :
+                      (props.type === "parking") ? solid('square-parking') :
+                      (props.type === "air-conditioner") ? solid('wind') :
+                      (props.type === "restaurant") ? solid('utensils') :
+                      (props.type === "gym") ? solid('dumbbell') :
+                      (props.type === "breakfast") ? solid('bread-slice') : 
+                      solid('question')
+                    );
 
+  return(
+    <FontAwesomeIcon className="facilityIcon" icon={facilityType} />
+  );
 }
 
 const FacilitiesDiv = (props) => {
-  let testeDiv = <div>
-    <h1>Testando</h1>
-  </div>
+  let facilitiesTypes = props.facilities, facilitiesIcons = [];
+
+  facilitiesTypes.forEach( (facilityType) => {
+    facilitiesIcons.push( <FacilityIcon type={facilityType} /> );
+  });
   return(
-    testeDiv
+    <div className='facilitiesDiv'>
+      {facilitiesIcons}
+    </div>
   );
 }
 
@@ -81,6 +99,6 @@ const FacilitiesDiv = (props) => {
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <div>
-    <EvaluationDiv evaluationGrade="2.5" />
+    <FacilitiesDiv facilities={["pool", "animals-allowed", "breakfast", "gym", "restaurant"]} />
   </div>
 );
