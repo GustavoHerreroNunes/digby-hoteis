@@ -2,30 +2,29 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { solid, regular } from '@fortawesome/fontawesome-svg-core/import.macro';
+import hotelImage from './img/hotel-loures.jpg';
 import './index.css';
 
-const Image = (props) => {
-  let imageClass = `img-${props.type}`;
-  
+const Image = (props) => {  
   return(
-    <img className={imageClass} src={props.src} alt={props.alt} />
+    <img className={props.className} src={props.src} alt={props.alt} />
   );
 }
 
 const Header = (props) => {
   return(
-    <div className='header'>
+    <div className='header hotelCardComponent'>
       <h1>{props.children}</h1>
       <p>{props.localization}</p>
-      <StarAvaliationDiv starsNumber={props.avaliation} />
+      <EvaluationDiv evaluationGrade={props.evaluation} />
     </div>
   );
 }
 
 const Description = (props) => {
   return(
-    <article className='description'>
-      <h2>{props.title}</h2>
+    <article className='description hotelCardComponent'>
+      <h2>Descrição</h2>
       <p>{props.children}</p>
     </article>
   );
@@ -58,7 +57,7 @@ const EvaluationDiv = (props) => {
   }
 
   return(
-    <div>
+    <div className='hotelCardComponent evaluationDiv'>
       {starsDiv}
     </div>
   );
@@ -89,8 +88,11 @@ const FacilitiesDiv = (props) => {
     facilitiesIcons.push( <FacilityIcon type={facilityType} /> );
   });
   return(
-    <div className='facilitiesDiv'>
-      {facilitiesIcons}
+    <div className='facilitiesDiv hotelCardComponent'>
+      <h2>Facilidades</h2>
+      <div className='facilitiesIcons'>
+        {facilitiesIcons}
+      </div>
     </div>
   );
 }
@@ -98,7 +100,19 @@ const FacilitiesDiv = (props) => {
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <div>
-    <FacilitiesDiv facilities={["pool", "animals-allowed", "breakfast", "gym", "restaurant"]} />
+  <div className='hotelExpandedCard'>
+    <Image className="hotelCardImage" src={hotelImage} alt="Fotografia da fachada do Hotel Loures" />
+    <div className='content'>
+      <Header localization="Campos do Jordão" evaluation="4">
+        Hotel Loures
+      </Header>
+      <Description>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure
+        dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+        proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+      </Description>
+      <FacilitiesDiv facilities={["wifi","cable-tv","gym","animals-allowed"]} />
+    </div>
   </div>
 );
